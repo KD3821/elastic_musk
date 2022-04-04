@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Make your SEARCH!</h1>
+
+<form method=post>
+    {{ csrf_token }}
+
+    <p>{{ form.name_s.label }}<br>{{ form.name_s }}</p>
+    <p>{{ form.body_s.label }}<br>{{ form.body_s }}</p>
+
+    <p> {{ form.submit }}</p>
+
+</form>
+
+
+{% endblock %}
