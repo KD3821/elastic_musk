@@ -1,0 +1,27 @@
+*********** commands for adding index at backend *************
+
+from elasticsearch import Elasticsearch
+
+import json
+
+es = Elasticsearch("http://127.0.0.1:9200")
+
+def load_json(file):
+    with open(file) as f:
+        data = json.load(f)
+        return data
+
+def add_to_index(file, index_name):
+    es.indices.create(index=str(index_name))
+    data = load_json(file)
+    doc_id = 0
+    for i in data:
+        doc_id += 1
+        es.index(index=str(index_name), id=doc_id, body=i)
+    return 'index "'+str(index_name)+'" added!'
+    
+new_index = add_to_index('short-musk.json', 'short_musk')
+
+new_index_full = add_to_index('middle-musk.json', 'middle_musk')
+
+new_index_full = add_to_index('chummy-black-wolfhound.json', 'full_musk')

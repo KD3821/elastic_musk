@@ -1,11 +1,40 @@
 {% extends "layout.html" %}
 {% block body %}
 <h1>Make your SEARCH!</h1>
-
+<br><br><br>
+There are 3 indexes available for search:
+<ul>
+    <li>Short Musk - name for list of first 20 tweets</li>
+    <li>Middle Musk - name for list of first 40 tweets</li>
+    <li>Full Musk - name for full list of tweets (over 6500 tweets)</li>
+</ul>
+<p>Please choose name of index and type your search request.<br>
+Please use search format like shown below.<br>You can use up to 3 words devided by space.<br>Must->Should->Filter were used for 'bool' key:<br>
+<br>
+<br>
+{<br>
+"text": "doge coin",<br>
+"top_k": 5<br>
+}<br>
+<br>
+OR
+<br>
+<br>
+{<br>
+"text": "doge coin to",<br>
+"top_k": 5<br>
+}<br>
+<br>
 <form method=post>
     {{ csrf_token }}
+    {{ form.name_s.label }}
+    <select id="name_s" name="name_s">
+        <option value="short_musk">Short List</option>
+        <option value="middle_musk">Middle List</option>
+        <option value="full_musk">Full List</option>
+    </select>
 
-    <p>{{ form.name_s.label }}<br>{{ form.name_s }}</p>
+<!--    <p>{{ form.name_s.label }}<br>{{ form.name_s }}</p>-->
     <p>{{ form.body_s.label }}<br>{{ form.body_s }}</p>
 
     <p> {{ form.submit }}</p>

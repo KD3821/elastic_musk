@@ -29,6 +29,9 @@ def show_res(index_name, search_body):
     return total_res
 
 
+
+
+
 # body = {
 #     "from": 0,
 #     "size": 18,
