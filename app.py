@@ -34,6 +34,7 @@ def search():
         fin = []
 
         s = body_search.splitlines()
+
         for i in s:
             if ":" in i:
                 if i[-1] == ",":
@@ -45,7 +46,12 @@ def search():
                     if j[0] == '"':
                         if j[-1] == '"':
                             j = j[1:-1]
-                            if j[-1] == ' ':
+                            if j[0] == ' ':
+                                if j[-1] == ' ':
+                                    text = j[1:-1]
+                                else:
+                                    text = j[1:]
+                            elif j[-1] == ' ':
                                 text = j[:-1]
                             else:
                                 text = j
@@ -88,7 +94,7 @@ def search():
                     word_n['2'] = search_words[i]
         else:
             word = words
-
+            word_n = {}
         if len(word_n) == 2:
             add_q_1 = ',"should": {"match": {"text": "' + word_n['1'] + '"}}'
             add_q_2 = ',"filter": {"match": {"text": "' + word_n['2'] + '"}}'
@@ -96,6 +102,8 @@ def search():
         elif len(word_n) == 1:
             add_q_1 = ',"should": {"match": {"text": "' + word_n['1'] + '"}}'
             main_q = '{"from": 0, "size": ' + str(amount) + ', "query": {"bool": {"must": {"match": {"text": "' + word + '"}}' + add_q_1 + '}}}'
+        else:
+            main_q = '{"from": 0, "size": ' + str(amount) + ', "query": {"bool": {"must": {"match": {"text": "' + word + '"}}}}}'
         body_search = main_q
         total = show_res(name_search, body_search)
 
@@ -107,7 +115,7 @@ def search():
         td_o = '<td>'
         td_c = '</td>'
         string_html += tbl_o
-        string_html += tr_o + 'ИМЯ ЗАПРОСА: ' + name_search + tr_o
+        string_html += tr_o + 'Name of index: ' + name_search + tr_o
         string_html += tr_o + td_o + 'score' + td_c + td_o + 'source' + td_c + tr_c
         for i in range(len(total)):
             string_html += tr_o
